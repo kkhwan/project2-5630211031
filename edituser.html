@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="css/nav.css" media="screen,projection" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div id="topbar" class="hoc clear">
+            <div class="fl_left">
+                <ul>
+                    <li>
+                        <h2><b>KHWAN.N</b></h2></li>
+                </ul>
+            </div>
+            <div class="fl_right">
+                <ul>
+                    <li class="active"><a href="index.html"><i class="glyphicon glyphicon-home"></i></a></li>
+                    <li><span class="username"></span></li>
+                    <li><a href="index.html">Log out</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr />
+    </div>
+
+    <div class="wrapper bgded overlay" style="background-image:url('images/pic2.jpg');">
+        <div id="pageintro" class="hoc clear">
+            <h1>Edit Profile</h1><br>
+            <form class="" action="#" method="post">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3"><i class="glyphicon glyphicon-user"></i> Username :</span>
+                    <input type="text" class="form-control" id="username" placeholder="Username" aria-describedby="basic-addon1">
+                </div><br />
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3"><i class="glyphicon glyphicon-pencil"></i> First name :</span>
+                    <input type="text" class="form-control" id="fname" placeholder="First name" aria-describedby="basic-addon1">
+                </div><br />
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3"><i class="glyphicon glyphicon-pencil"></i> Last name :</span>
+                    <input type="text" class="form-control" id="lname" placeholder="Last name" aria-describedby="basic-addon1">
+                </div><br />
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3"><i class="glyphicon glyphicon-envelope"></i> Email :</span>
+                    <input type="email" class="form-control" id="email" placeholder="Email" aria-describedby="basic-addon1">
+                </div><br />
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3"><i class="glyphicon glyphicon-phone-alt"></i> Telephone :</span>
+                    <input type="text" class="form-control" id="tel" placeholder="Telephone" aria-describedby="basic-addon1">
+                </div><br />
+                <button type="button" id="save" name="button" class="btn btn-primary">Save <i class="glyphicon glyphicon-save"></i></button>
+                <button type="button" id="cancel" name="button" class="btn btn-danger">Cancel <i class="glyphicon glyphicon-remove"></i></button>
+            </form>
+        </div>
+    </div>
+    </div>
+
+    <div class="container">
+
+
+
+    </div>
+
+    <!--Import jQuery before materialize.js-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $.urlParam = function(name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            return results[1] || 0;
+        }
+
+        $(function() {
+            //Get user Id from querystring parameters
+            var id = $.urlParam('id');
+            //Create a Web Api url for getting a member info
+            var url = "http://membershipwebapi977290.azurewebsites.net/api/Members/" + id;
+            // console.log(url);
+            $.get(url, function(data, status) {
+                // console.log(data);
+                //Set data to form elements
+                $('.username').append(data.UserName);
+                $('#username').val(data.UserName);
+                // $('#password').val(data.Password);
+                $('#fname').val(data.FirstName);
+                $('#lname').val(data.LastName);
+                $('#email').val(data.Email);
+                $('#tel').val(data.Tel);
+
+                //If user click cancel, go to userinfo page
+                $("#cancel").click(function() {
+                    window.location.href = "home.html?id=" + data.Id;
+                });
+
+                //Save updated data
+                $("#save").click(function() {
+                    //Set update data to newuser object
+                    var newuser = {};
+                    newuser.Id = data.Id;
+                    newuser.username = $("#username").val();
+                    newuser.password = data.Password;
+                    newuser.firstname = $("#fname").val();
+                    newuser.lastname = $("#lname").val();
+                    newuser.email = $("#email").val();
+                    newuser.tel = $("#tel").val();
+                    // console.log(JSON.stringify(newuser));
+
+                    //Creat a url for update member data
+                    var updateUrl = "http://membershipwebapi977290.azurewebsites.net/api/Members/" + data.Id;
+                    //Call Web Api with method PUT for updating
+                    $.ajax({
+                        url: updateUrl,
+                        type: 'PUT',
+                        data: newuser,
+                        success: function(result) {
+                            alert('Updated Complete!');
+                            window.location.href = "home.html?id=" + data.Id;
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
