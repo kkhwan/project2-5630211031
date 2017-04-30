@@ -3,7 +3,7 @@
 .bgded{background-position:top center; background-repeat:no-repeat; background-size:cover;}
 
 
-#pageintro{padding:250px 0;}
+#pageintro{padding:100px 0;}
 #pageintro li article{display:block; max-width:75%; padding-bottom:10px; overflow:hidden;}
 #pageintro li article *{word-wrap:break-word;}
 #pageintro li .heading{margin-bottom:20px; font-size:3rem;}

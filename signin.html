@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="css/nav.css" media="screen,projection" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div id="topbar" class="hoc clear">
+            <div class="fl_left">
+                <ul>
+                    <li>
+                        <h2><b>KHWAN.N</b></h2></li>
+                </ul>
+            </div>
+            <div class="fl_right">
+                <ul>
+                    <li><a href="index.html"><i class="glyphicon glyphicon-home"></i></a></li>
+                    <li class="active"><a href="signin.html">Signin</a></li>
+                    <li><a href="register.html">Register</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr />
+    </div>
+
+    <div class="wrapper bgded overlay" style="background-image:url('images/pic2.jpg');">
+        <div id="pageintro" class="hoc clear">
+            <h1>SIGN IN</h1><br>
+            <form class="" action="#" method="post">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3"><i class="glyphicon glyphicon-user"></i> Username :</span>
+                    <input type="text" class="form-control" id="username" placeholder="Username" aria-describedby="basic-addon1">
+                </div><br />
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3"><i class="glyphicon glyphicon-lock"></i> Password :</span>
+                    <input type="password" class="form-control" id="password" placeholder="Password" aria-describedby="basic-addon1">
+                </div><br />
+                <a class="btn btn-primary" id="signin">SIGN IN <i class="glyphicon glyphicon-chevron-right"></i> </a>
+                <a class="btn btn-primary" id="signup">REGISTER <i class="glyphicon glyphicon-file"></i> </a>
+                <a class="btn btn-primary" id="home">HOME <i class="glyphicon glyphicon-home"></i> </a>
+            </form>
+        </div>
+    </div>
+
+    <!--Import jQuery before materialize.js-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $("#signin").click(function() {
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var url = "http://membershipwebapi977290.azurewebsites.net/api/members/signin?username=" + username + "&password=" + password;
+            $.get(url, function(data, status) {
+                // console.log("URL : " + url);
+                // console.log("inserted " + data.Status);
+                if (data.Status) {
+                    // console.log("OK");
+                    // window.location.assign("home-login.html");
+                    window.location.href = "home-login.html?id=" + data.CurrentUser.Id;
+                } else {
+                    window.alert("Username or Password wrong !");
+                    window.location.assign("signin.html");
+                }
+            });
+        });
+
+        $("#signup").click(function() {
+            // console.log("Sign Up");
+            window.location.assign("register.html");
+        });
+
+        $("#home").click(function() {
+            // console.log("Sign Up");
+            window.location.assign("index.html");
+        });
+    </script>
+
+</body>
+
+</html>

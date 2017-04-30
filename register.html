@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="css/nav.css" media="screen,projection" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div id="topbar" class="hoc clear">
+            <div class="fl_left">
+                <ul>
+                    <li>
+                        <h2><b>KHWAN.N</b></h2></li>
+                </ul>
+            </div>
+            <div class="fl_right">
+                <ul>
+                    <li class="active"><a href="index.html"><i class="glyphicon glyphicon-home"></i></a></li>
+                    <li><a href="signin.html">Signin</a></li>
+                    <li><a href="register.html">Register</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr />
+    </div>
+
+    <div class="wrapper bgded overlay" style="background-image:url('images/pic2.jpg');">
+        <div id="pageintro" class="hoc clear">
+            <h1>New Member Registration</h1><br>
+            <form class="" action="#" method="post">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3"><i class="glyphicon glyphicon-user"></i> Username :</span>
+                    <input type="text" class="form-control" id="username" placeholder="Username" aria-describedby="basic-addon1">
+                </div><br />
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3"><i class="glyphicon glyphicon-lock"></i> Password :</span>
+                    <input type="password" class="form-control" id="password" placeholder="Password" aria-describedby="basic-addon1">
+                </div><br />
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3"><i class="glyphicon glyphicon-lock"></i> Repassword :</span>
+                    <input type="password" class="form-control" id="password" id="repassword" placeholder="Repassword" aria-describedby="basic-addon1">
+                </div><br />
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3"><i class="glyphicon glyphicon-pencil"></i> First name :</span>
+                    <input type="text" class="form-control" id="fname" placeholder="First name" aria-describedby="basic-addon1">
+                </div><br />
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3"><i class="glyphicon glyphicon-pencil"></i> Last name :</span>
+                    <input type="text" class="form-control" id="lname" placeholder="Last name" aria-describedby="basic-addon1">
+                </div><br />
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3"><i class="glyphicon glyphicon-envelope"></i> Email :</span>
+                    <input type="email" class="form-control" id="email" placeholder="Email" aria-describedby="basic-addon1">
+                </div><br />
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3"><i class="glyphicon glyphicon-phone-alt"></i> Telephone :</span>
+                    <input type="text" class="form-control" id="telephone" placeholder="Telephone" aria-describedby="basic-addon1">
+                </div><br />
+                <button type="button" name="button" id="signup" class="btn btn-primary">REGISTER</button>
+                <button type="button" name="button" id="home" class="btn btn-primary"><i class="glyphicon glyphicon-home"></i> HOME</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+
+
+
+    </div>
+
+    <!--Import jQuery before materialize.js-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/signup.js"></script>
+    <script type="text/javascript">
+        $("#signup").click(function() {
+            var newuser = {
+                UserName: "",
+                Password: "",
+                FirstName: "",
+                LastName: "",
+                Email: "",
+                Tel: "",
+            };
+
+            newuser.UserName = $("#username").val();
+            newuser.Password = $("#password").val();
+            repassword = $("#repassword").val();
+            newuser.FirstName = $("#fname").val();
+            newuser.LastName = $("#lname").val();
+            newuser.Email = $("#email").val();
+            newuser.Tel = $("#telephone").val();
+
+            if (newuser.Password != repassword) {
+                alert("Password not match");
+            }
+
+            if (newuser.UserName && newuser.Password && newuser.FirstName && newuser.LastName && newuser.Email && newuser.Tel) {
+                var url = "http://membershipwebapi977290.azurewebsites.net/api/Members";
+                $.post(url, newuser, function(data, status) {
+                    alert("SIGN UP Complete. \nWebsite will redirect to login page.");
+                    window.location.assign("index.html");
+                });
+            } else {
+                alert("Please fill form");
+            }
+        });
+
+        $("#home").click(function() {
+            // console.log("Sign Up");
+            window.location.assign("index.html");
+        });
+    </script>
+
+
+</body>
+
+</html>
